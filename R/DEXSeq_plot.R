@@ -62,6 +62,14 @@ plot.DEX <- function(object, geneID, fitExpToVar, gff, expression = TRUE, FDR = 
     # ---- FUNCTION to import and clean the GFF data (data.table) -----
     # ===> CAN BE CUSTOMIZED TO DIFFERENT FORMATS <====
     clean.gff <- function( gff, id.var = 'Parent=', geneID ){
+        # ---- Function for internal string filtering ----
+        ff <- function(x, id.var){
+            sp <- unlist(strsplit(x, split =';'))
+            sp <- gsub(paste(id.var), '', sp[grepl('Parent', sp)])
+            if(identical(sp, character(0)))
+                sp <- NA
+            return(sp)
+        }
         sub <- gff[ grepl(geneID, gff$V9), ]
         if( nrow(sub) == 0 )
             stop('Filtering went completly wrong!!')
@@ -75,14 +83,7 @@ plot.DEX <- function(object, geneID, fitExpToVar, gff, expression = TRUE, FDR = 
         sub <- split( sub, sub$parent )
         sub <- sub[ order( as.numeric(gsub('\\S+\\.t', '', names(sub))) ) ]
         return(sub)
-        # ---- Function for internal string filtering ----
-        ff <- function(x, id.var){
-            sp <- unlist(strsplit(x, split =';'))
-            sp <- gsub(paste(id.var), '', sp[grepl('Parent', sp)])
-            if(identical(sp, character(0)))
-                sp <- NA
-            return(sp)
-        }
+
     }
     # --- FILTER THE GFF DATA ---
     tgff <- clean.gff( gff = gff, geneID = geneID)

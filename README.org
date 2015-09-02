@@ -5,6 +5,29 @@ Collection of usefull =`R`= scripts; README has to be improved in time
 
 Script providing extended functionality to plot =`DEXSeq`= results.
 
+** example
+
+#+BEGIN_SRC R :session DEX :exports both :results graphics :file plots/DEXSeq_plot.png :width 800 :height 600
+library(DEXSeq)
+library(data.table)
+source('~/Documents/R_scripts/R/DEXSeq_plot.R')
+load( "~/Documents/Cigene/Side_Projects/Radioactive/data/de_exon.RData")
+
+# read gff
+gff <- fread('~/Documents/Cigene/Side_Projects/Radioactive/plot-test/Salmon_3p6_Chr_070715_All.filter.gff3', 
+             verbose = FALSE)
+
+plot.DEX(dxr, geneID = 'CIGSSA_022765', fitExpToVar = 'group', 
+         gff = gff, geneNAME = 'tp53')
+#+END_SRC
+
+#+RESULTS:
+[[file:plots/DEXSeq_plot.png]]
+
+** TASKS
+
+*** TODO Color option for groups
+
 * DONE DB_schema.R
   CLOSED: [2015-09-02 Wed 20:21]
 
