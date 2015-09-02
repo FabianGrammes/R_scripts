@@ -1,0 +1,28 @@
+Collection of usefull =`R`= scripts; README has to be improved in time
+
+* DONE DEXSeq_plot.R
+  CLOSED: [2015-09-02 Wed 20:21]
+
+Script providing extended functionality to plot =`DEXSeq`= results.
+
+* DONE DB_schema.R
+  CLOSED: [2015-09-02 Wed 20:21]
+
+Old script with some =`grid`= code to plot DB schemas
+
+* GOfunctions.R
+
+* GOfunctions2.R
+
+* TODO circos_script.R
+
+* TODO circos_script2.R
+
+* grid_heatmap.R
+
+* DONE grid_matrix.R
+  CLOSED: [2015-09-02 Wed 20:22]
+
+Plot overlap matrix 
+
+* tile_heatmap.R
