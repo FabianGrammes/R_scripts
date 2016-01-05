@@ -28,6 +28,39 @@ plot.DEX(dxr, geneID = 'CIGSSA_022765', fitExpToVar = 'group',
 
 *** TODO Color option for groups
 
+
+* DONE fancy_tree
+  CLOSED: [2016-01-05 Tue 12:47]
+
+Script to show the alignments side by side with the tree. 
+ - *Important* the `plot.tb` accepts accepts additional parameters for
+   the `plot.phylo` function (passed on by `...`).
+
+
+#+BEGIN_SRC R :session DEX :exports both :results graphics :file plots/Fancy_tree.png :width 700 :height 800
+library(phangorn)
+source('~/Documents/R_scripts/R/fancy_tree.R')
+
+# read alignment
+algn <- read.phyDat('data/grp101740_MAFFT.algn', type = 'AA', format = 'fasta')
+dm = dist.ml(algn, model = 'WAG')
+tree1 <- nj(dm)
+
+# Strange; but necessary to get the correct order
+tree1 <- read.tree(text = write.tree(ladderize(tree1)))
+# root
+tree1 <- root( tree1, outgroup = "Locu.ENSLOCP00000012114")
+
+#grid.newpage()
+plot.tb(tree1, algn, block.col = 'steelblue', block.lwd = 1)
+
+#+END_SRC
+
+#+RESULTS:
+[[file:plots/Fancy_tree.png]]
+
+
+
 * DONE DB_schema.R
   CLOSED: [2015-09-02 Wed 20:21]
 

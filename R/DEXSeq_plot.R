@@ -216,7 +216,7 @@ plot.DEX <- function(object, geneID, fitExpToVar, gff, expression = TRUE, FDR = 
     grid.newpage()  # ==> ERASE LATER <==
     lay <- grid.layout(nrow = 6, ncol = 3,
                        width = c(0.07, 0.8, 0.2),
-                       height = c(0.1,0.4,0.1,0.08,cds.size, 0.05))
+                       height = c(0.15,0.35,0.1,0.08,cds.size, 0.05))
     pushViewport( viewport( layout = lay))
 
     # - SET PLOTTING COLORS -
@@ -255,7 +255,7 @@ plot.DEX <- function(object, geneID, fitExpToVar, gff, expression = TRUE, FDR = 
                label = levels(coeff[[1]]$exon),
                main = FALSE,
                edits = gEdit(gPath="labels", rot = 90,vjust=0.5),
-               gp = gpar(cex = 0.8))
+               gp = gpar(cex = 0.6))
               
     grid.points(x = jitter(as.numeric(count$exon)), y = count$value,
                 size = unit(0.1, units = 'native'),
@@ -323,18 +323,23 @@ plot.DEX <- function(object, geneID, fitExpToVar, gff, expression = TRUE, FDR = 
              gp = gpar(cex = 0.8))
    upViewport()
 
-   # -- PLOT LEGEND
-   pushViewport( viewport(layout.pos.row = 1:2, layout.pos.col = 3 ) )
-   grid.text(label = paste(geneNAME, geneID, sep ='\n'),
-             x = 0.5, y = 0.85,
+   # -- PLOT TITLE --
+   pushViewport( viewport(layout.pos.row = 1, layout.pos.col = 1:3 ) )
+   grid.text(label = paste( geneID, geneNAME, sep =' : '),
+             x = 0.5, y = 0.75,
              gp = gpar(cex = 1.2, fontface = 'bold'))
+   upViewport()
+
+    
+   # -- PLOT LEGEND --
+   pushViewport( viewport(layout.pos.row = 1:2, layout.pos.col = 3 ) )
    grid.polyline(x = rep(c(0.15,0.2),length(coeff)),
-                 y = rep(seq(0.6, 0.2, length.out = length(coeff)), each = 2),
+                 y = rep(seq(0.5, 0.2, length.out = length(coeff)), each = 2),
                  id = rep(1:length(coeff), each =2),
                  gp = gpar(lwd =5, col = model.bars))
    grid.text(label = names(coeff),
              x = 0.25,
-             y = seq(0.6, 0.2, length.out = length(coeff)),
+             y = seq(0.5, 0.2, length.out = length(coeff)),
              just = 'left',
              gp = gpar(cex = 1))
    upViewport()
