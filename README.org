@@ -38,7 +38,7 @@ Script to show the alignments side by side with the tree.
 
 
 #+BEGIN_SRC R :session DEX :exports both :results graphics :file plots/Fancy_tree.png :width 700 :height 800
-library(phangorn)
+library(phangorn)P
 source('~/Documents/R_scripts/R/fancy_tree.R')
 
 # read alignment

@@ -59,13 +59,13 @@ plot.algn <- function(x, fill, col = NA, lwd = 1){
 
 plot.algn.wrapper <- function( algn, col, lwd ){
     nrow <- length(algn)
-    lay <- grid.layout(nrow = length(algn)+2,
+    lay <- grid.layout(nrow = length(algn),
                        ncol =1,
-                       heights = c(0.02, rep(0.92/nrow, nrow), 0.02))
+                       heights = rep(1/nrow, nrow))
     ralgn <- rev(algn)
     pushViewport( viewport( layout = lay))
     for( i in 1:length(algn)){
-        pushViewport( viewport(layout.pos.row = i+1, layout.pos.col = 1)  )
+        pushViewport( viewport(layout.pos.row = i, layout.pos.col = 1)  )
         aa <- find.algn.interval(ralgn[[i]])
         plot.algn(aa, fill = col, lwd)
         #grid.text( label = names(ralgn)[i] )
@@ -77,7 +77,7 @@ plot.algn.wrapper <- function( algn, col, lwd ){
 
 # - wrapping the functions -
 
-plot.tb <- function( tree, algn, block.col, block.lwd, ... ){
+plot.tb <- function( tree, algn, block.col, block.lwd, nl = FALSE, ... ){
     # --- 1st check
     if( ! all(tree$tip.label %in% names(algn)) )
         stop( 'ERR1: TREE and Alignemnt do not match')
@@ -87,8 +87,8 @@ plot.tb <- function( tree, algn, block.col, block.lwd, ... ){
     # --- 2nd check
     if( ! all(tree$tip.label == names(algn)) )
         stop( 'ERR2: Names in TREE and Alignemnt do not match')
-    # -- plot dimensions --
-    nrow <- length(algn)
+    # -- plot dimensions -- scaling factor for the tree y-axis
+    yfact <- 1/(0.93 + 0.93/length(algn))
     # page layout
     glay <- grid.layout(nrow = 3,
                         ncol = 4,
@@ -97,13 +97,14 @@ plot.tb <- function( tree, algn, block.col, block.lwd, ... ){
     pushViewport(viewport(layout = glay))
     # --- plot Dendrogram ---
     pushViewport( viewport(layout.pos.col = 2 , layout.pos.row = 2) )
+    pushViewport( viewport(height = yfact, width =1))
     par( plt = gridPLT());par(new=TRUE)
     plot(tree, cex = 0.5, ...)
+    upViewport()
     upViewport()
     # --- plot alignment bars ---
     pushViewport( viewport(layout.pos.col = 3, layout.pos.row = 2 ) )
     plot.algn.wrapper(algn, col = block.col, lwd = block.lwd)
     upViewport()
 }
-
 
